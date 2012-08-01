@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import optparse
+
+from hostexpand import VERSION
+from hostexpand.HostExpander import HostExpander
+
+parser = optparse.OptionParser(version="hostexpand %s" % VERSION)
+parser.add_option('', '--nrformat', dest='nrformat', help='nr format')
+parser.add_option('', '--outputformat', dest='outputformat', help='output format')
+opts, args = parser.parse_args()
+
+expander = HostExpander(**vars(opts))
+
+print '\n'.join(expander.expand(args))
