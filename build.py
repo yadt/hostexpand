@@ -50,7 +50,7 @@ def set_properties (project):
     
     project.set_property('coverage_break_build', True)
 
-    project.get_property('distutils_commands').append('bdist_rpm')    
+    project.get_property('distutils_commands').append('bdist_egg')    
 
     project.get_property('filter_resources_glob').append('**/hostexpand/__init__.py')
 
