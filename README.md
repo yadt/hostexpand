@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/yadt/hostexpand.png)](http://travis-ci.org/yadt/hostexpand)
+# hostexpand [![Build Status](https://secure.travis-ci.org/yadt/hostexpand.png)](http://travis-ci.org/yadt/hostexpand)
 
 ## Installation with pip
 It is considered good practice to install all packages available via pip & easy_install in a
