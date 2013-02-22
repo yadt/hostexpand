@@ -1,5 +1,5 @@
 #   hostexpand
-#   Copyright (C) 2012 Immobilien Scout GmbH
+#   Copyright (C) 2012-2013 Immobilien Scout GmbH
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from pythonbuilder.core import use_plugin, init, Author
+from pybuilder.core import use_plugin, init, Author
 
 use_plugin('python.core')
 use_plugin('python.unittest')
