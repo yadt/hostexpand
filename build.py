@@ -43,14 +43,14 @@ license = 'GNU GPL v3'
 
 @init
 def set_properties (project):
-    project.depends_on('dnspython', '==1.9.4')
+    project.depends_on('dnspython')
 
     project.build_depends_on('mockito')
-    project.build_depends_on('coverage')    
-    
+    project.build_depends_on('coverage')
+
     project.set_property('coverage_break_build', True)
 
-    project.get_property('distutils_commands').append('bdist_egg')    
+    project.get_property('distutils_commands').append('bdist_egg')
 
     project.get_property('filter_resources_glob').append('**/hostexpand/__init__.py')
 
