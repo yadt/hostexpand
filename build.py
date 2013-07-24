@@ -29,7 +29,7 @@ use_plugin('filter_resources')
 
 default_task = ['analyze', 'publish']
 
-version = '1.0.1'
+version = '1.0.2'
 name    = 'hostexpand'
 summary = 'A tool to expand hostnames based on a pattern language and DNS resolution'
 authors = [
