@@ -22,6 +22,7 @@ use_plugin('python.integrationtest')
 use_plugin('python.coverage')
 use_plugin('python.distutils')
 use_plugin('python.pydev')
+use_plugin('python.flake8')
 use_plugin('python.install_dependencies')
 
 use_plugin('copy_resources')
@@ -35,7 +36,9 @@ summary = 'A tool to expand hostnames based on a pattern language and DNS resolu
 authors = [
     Author('Arne Hilmann', 'arne.hilmann@gmail.com'),
     Author('Alexander Metzner', 'alexander.metzner@gmail.com'),
-    Author('Udo Juettner', 'udo.juettner@gmail.com')
+    Author('Udo Juettner', 'udo.juettner@gmail.com'),
+    Author('Schlomo Schapiro', 'github@schlomo.schapiro.org'),
+    Author('Maximilien Riehl', 'maximilien.riehl@gmail.com')
 ]
 
 url = 'https://github.com/yadt/hostexpand'
