@@ -114,20 +114,24 @@ class IpHostExpanderTest(HostExpanderTestBase):
         when(socket).gethostbyname("spam01").thenReturn("192.168.111.112")
         self.expand_and_assert("spam01", "192.168.111.112")
         verify(socket).gethostbyname("spam01")
-        
+
 
 class FileHostExpanderTest(HostExpanderTestBase):
 
     def setUp(self):
         self.expander = HostExpander(outputformat=HostExpander.IP)
-        self.datafile = NamedTemporaryFile() # give fully qualified path name which triggers file expansion
+        self.datafile = NamedTemporaryFile()
+                                           # give fully qualified path name
+                                           # which triggers file expansion
         self.datafile.write("spam01.domain\nspam02.domain\n")
         self.datafile.flush()
 
     def test_should_expand_single_file_with_two_names_to_ip_address(self):
-        when(socket).gethostbyname("spam01.domain").thenReturn("192.168.111.112")
-        when(socket).gethostbyname("spam02.domain").thenReturn("192.168.111.113")
-        self.expand_and_assert(self.datafile.name, "192.168.111.112","192.168.111.113")
+        when(socket).gethostbyname(
+            "spam01.domain").thenReturn("192.168.111.112")
+        when(socket).gethostbyname(
+            "spam02.domain").thenReturn("192.168.111.113")
+        self.expand_and_assert(
+            self.datafile.name, "192.168.111.112", "192.168.111.113")
         verify(socket).gethostbyname("spam01.domain")
         verify(socket).gethostbyname("spam02.domain")
-        
