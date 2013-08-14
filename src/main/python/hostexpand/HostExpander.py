@@ -3,6 +3,7 @@ import sys
 import socket
 import dns.resolver
 
+
 class HostExpander(object):
     IP = 'ip'
     FQDN = 'fqdn'
@@ -16,7 +17,8 @@ class HostExpander(object):
         if not self.outputformat:
             self.outputformat = HostExpander.SHORTNAME
         self.start_nr = start_nr
-        self.substract_prefix = substract_prefix if substract_prefix else set(['-', '!'])
+        self.substract_prefix = substract_prefix if substract_prefix else set(
+            ['-', '!'])
 
     def _expand_nr(self, name, start, end):
         if not start:
@@ -79,7 +81,8 @@ class HostExpander(object):
             suffix = word[alt_end + 1:]
             alternatives = word[alt_start + 1:alt_end]
             for alternative in alternatives.split('|'):
-                hosts.update(self._expand_alternatives('%(prefix)s%(alternative)s%(suffix)s' % locals()))
+                hosts.update(self._expand_alternatives(
+                    '%(prefix)s%(alternative)s%(suffix)s' % locals()))
         return hosts
 
     def expand(self, items):
