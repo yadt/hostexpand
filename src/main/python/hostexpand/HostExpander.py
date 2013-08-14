@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import sys
+import os
 import socket
 import dns.resolver
 
@@ -48,7 +49,16 @@ class HostExpander(object):
         word = word.replace('*', '[:]')
         ranges_start = word.find('[')
         if ranges_start < 0:
-            yield self._get_hostname(word)
+            if word.find("/") >= 0 and os.path.exists(word):
+                with open(word) as datafile:
+                    for line in datafile:
+                        # strip comments and whitespace
+                        line = line.split('#', 1)[0]
+                        line = line.rstrip()
+                        if line:
+                            yield self._get_hostname(line)
+            else:
+                yield self._get_hostname(word)
         else:
             ranges_end = word.find(']', ranges_start)
             prefix = word[:ranges_start]
