@@ -142,7 +142,9 @@ class FileHostExpanderTest(HostExpanderTestBase):
         self.datafile.flush()
 
         self.expand_and_assert(
-            self.datafile.name, "192.168.111.112", "192.168.111.113", "192.168.111.254")
+            self.datafile.name, "192.168.111.112",
+                                "192.168.111.113",
+                                "192.168.111.254")
 
     def test_should_expand_single_file_with_two_names_to_ip_address(self):
         when(hostexpander.socket).gethostbyname(
