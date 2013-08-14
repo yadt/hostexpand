@@ -126,6 +126,9 @@ class FileHostExpanderTest(HostExpanderTestBase):
         self.datafile.write("spam01.domain\nspam02.domain\n")
         self.datafile.flush()
 
+    def tearDown(self):
+        self.datafile.close()
+
     def test_should_ignore_inline_comments_when_expanding_file(self):
         when(socket).gethostbyname(
             "spam01.domain").thenReturn("192.168.111.112")
