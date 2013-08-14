@@ -100,7 +100,8 @@ class FqdnHostExpanderTest(HostExpanderTestBase):
         self.expander = HostExpander(outputformat=HostExpander.FQDN)
 
     def test_should_expand_short_name_to_single_host_with_fqdn(self):
-        when(hostexpander.socket).getfqdn("spam01").thenReturn("spam01.long.domain.name")
+        when(hostexpander.socket).getfqdn(
+            "spam01").thenReturn("spam01.long.domain.name")
         self.expand_and_assert("spam01", "spam01.long.domain.name")
         verify(hostexpander.socket).getfqdn("spam01")
 
@@ -111,7 +112,8 @@ class IpHostExpanderTest(HostExpanderTestBase):
         self.expander = HostExpander(outputformat=HostExpander.IP)
 
     def test_should_expand_single_host_name_to_ip_address(self):
-        when(hostexpander.socket).gethostbyname("spam01").thenReturn("192.168.111.112")
+        when(hostexpander.socket).gethostbyname(
+            "spam01").thenReturn("192.168.111.112")
         self.expand_and_assert("spam01", "192.168.111.112")
         verify(hostexpander.socket).gethostbyname("spam01")
 
