@@ -119,40 +119,30 @@ class IpHostExpanderTest(HostExpanderTestBase):
 
 
 class FileHostExpanderTest(HostExpanderTestBase):
+    
+    def make_data_file(self,data):
+        # Use new temp file for each test
+        datafile = NamedTemporaryFile()
+        datafile.write(data)
+        datafile.flush()
+        # datafile is closed by garbage collector
+        return datafile
 
     def setUp(self):
         self.expander = HostExpander(outputformat=HostExpander.IP)
-        self.datafile = NamedTemporaryFile()
-                                           # give fully qualified path name
-                                           # which triggers file expansion
-        self.datafile.write("spam01.domain\nspam02.domain\n")
-        self.datafile.flush()
 
-    def tearDown(self):
-        self.datafile.close()
-
-    def test_should_ignore_inline_comments_when_expanding_file(self):
-        when(hostexpander.socket).gethostbyname(
-            "spam01.domain").thenReturn("192.168.111.112")
-        when(hostexpander.socket).gethostbyname(
-            "spam02.domain").thenReturn("192.168.111.113")
-        when(hostexpander.socket).gethostbyname(
-            "spam03.domain").thenReturn("192.168.111.254")
-        self.datafile.write("spam03.domain # ignore me\n")
-        self.datafile.flush()
-
-        self.expand_and_assert(
-            self.datafile.name, "192.168.111.112",
-                                "192.168.111.113",
-                                "192.168.111.254")
+    def test_should_ignore_inline_comments_and_blank_lines_when_expanding_file(self):
+        datafile = self.make_data_file("\n    # comment\n\n   # comment\n")
+        self.expand_and_assert(datafile.name) # expect empty result
 
     def test_should_expand_single_file_with_two_names_to_ip_address(self):
+        datafile = self.make_data_file("spam01.domain\nspam02.domain")
         when(hostexpander.socket).gethostbyname(
             "spam01.domain").thenReturn("192.168.111.112")
         when(hostexpander.socket).gethostbyname(
             "spam02.domain").thenReturn("192.168.111.113")
 
         self.expand_and_assert(
-            self.datafile.name, "192.168.111.112", "192.168.111.113")
+            datafile.name, "192.168.111.112", "192.168.111.113")
         verify(hostexpander.socket).gethostbyname("spam01.domain")
         verify(hostexpander.socket).gethostbyname("spam02.domain")
