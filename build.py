@@ -15,6 +15,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from pybuilder.core import use_plugin, init, Author
+import os
 
 use_plugin('python.core')
 use_plugin('python.unittest')
@@ -31,7 +32,7 @@ use_plugin('filter_resources')
 default_task = ['analyze', 'publish']
 
 version = '1.0.3'
-name    = 'hostexpand'
+name = 'hostexpand'
 summary = 'A tool to expand hostnames based on a pattern language and DNS resolution'
 authors = [
     Author('Arne Hilmann', 'arne.hilmann@gmail.com'),
@@ -44,8 +45,9 @@ authors = [
 url = 'https://github.com/yadt/hostexpand'
 license = 'GNU GPL v3'
 
+
 @init
-def set_properties (project):
+def set_properties(project):
     project.depends_on('dnspython')
 
     project.build_depends_on('mockito')
@@ -53,33 +55,37 @@ def set_properties (project):
 
     project.set_property('coverage_break_build', True)
 
-    project.get_property('distutils_commands').append('bdist_egg')
-
-    project.get_property('filter_resources_glob').append('**/hostexpand/__init__.py')
+    project.get_property('filter_resources_glob').append(
+        '**/hostexpand/__init__.py')
 
     project.set_property('copy_resources_target', '$dir_dist')
     project.get_property('copy_resources_glob').append('README')
     project.get_property('copy_resources_glob').append('setup.cfg')
+    project.get_property('copy_resources_glob').append('docs/man/*')
 
     project.set_property('dir_dist_scripts', 'scripts')
 
-    project.get_property('distutils_commands').append('bdist_egg')
     project.set_property('distutils_classifiers', [
-          'Development Status :: 5 - Production/Stable',
-          'Environment :: Console',
-          'Intended Audience :: Developers',
-          'Intended Audience :: System Administrators',
-          'License :: OSI Approved :: GNU General Public License (GPL)',
-          'Programming Language :: Python',
-          'Topic :: System :: Networking',
-          'Topic :: System :: Software Distribution',
-          'Topic :: System :: Systems Administration'])
+                         'Development Status :: 5 - Production/Stable',
+                         'Environment :: Console',
+                         'Intended Audience :: Developers',
+                         'Intended Audience :: System Administrators',
+                         'License :: OSI Approved :: GNU General Public License (GPL)',
+                         'Programming Language :: Python',
+                         'Topic :: System :: Networking',
+                         'Topic :: System :: Software Distribution',
+                         'Topic :: System :: Systems Administration'])
+
+    for manpage in os.listdir('docs/man/'):
+        project.install_file('share/man/man1/', 'docs/man/%s' % manpage)
+
 
 @init(environments='teamcity')
-def set_properties_for_teamcity (project):
+def set_properties_for_teamcity(project):
     import os
-    project.version = '%s-%s' % (project.version, os.environ.get('BUILD_NUMBER', 0))
+    project.version = '%s-%s' % (
+        project.version, os.environ.get('BUILD_NUMBER', 0))
     project.default_task = ['install_dependencies', 'analyze', 'package']
-    project.set_property('install_dependencies_index_url', os.environ.get('PYPIPROXY_URL'))
+    project.set_property(
+        'install_dependencies_index_url', os.environ.get('PYPIPROXY_URL'))
     project.set_property('install_dependencies_use_mirrors', False)
-
