@@ -3,7 +3,7 @@ hostexpand(1) -- expand hostnames based on a pattern language and DNS resolution
 
 ## SYNOPSIS
 
-`hostexpand` [options] <host-expression> [...]
+`hostexpand` [options] _host-expression_ [...]
 
 ## DESCRIPTION
 
@@ -11,31 +11,31 @@ Expand the host-expressionn into new-line separated list hostnames. Check each h
 
 ## OPTIONS
 
- * `--version`:
+ * **--version**:
    Show version
 
- * `--nrformat`=NRFORMAT:
+ * **--nrformat**=NRFORMAT:
    Set number format, default is `%02i`
 
- * `--outputformat`=OUTPUTFORMAT:
+ * **--outputformat**=OUTPUTFORMAT:
    Set the output format. Can be one of `shortname`, `fqdn`, or `ip`. Default is `shortname`.
 
 ## SYNTAX
 
 The following host-expressions are recognized, different pattern styles can be mixed freely:
 
- * Patterns:
+ * **Patterns**:
    Expressions like `foo*` are searched in DNS, starting from 1 and going up till no more hosts are found.
    The NRFORMAT sets the length of the number. In this example `foo01`, `foo02` ... would be searched.
 
- * Number Ranges:
+ * **Number Ranges**:
    Expressions like `foo[5..10]` are expanded to `foo05`, `foo06`, `foo07`, `foo07`, `foo09`, `foo10`.
    Expressions like `foo[5:10]` are expanded to `foo05`, `foo06`, `foo07`, `foo07`, `foo09`.
 
- * Alternatives:
+ * **Alternatives**:
    Expressions like `{foo|bar}` are expanded to `foo`, `bar`.
 
- * File Includes:
+ * **File Includes**:
    Expressions including a `/` are interpreted as a file to read, the file should contain hostnames one per line. # comments and empty lines are ignored.
 
 ## SEE ALSO
