@@ -26,10 +26,11 @@ use_plugin('python.pydev')
 use_plugin('python.flake8')
 use_plugin('python.install_dependencies')
 
+use_plugin('ronn_manpage')
 use_plugin('copy_resources')
 use_plugin('filter_resources')
 
-default_task = ['analyze', 'publish']
+default_task = ['generate_manpages', 'analyze', 'publish']
 
 version = '1.0.3'
 name = 'hostexpand'
@@ -76,8 +77,7 @@ def set_properties(project):
                          'Topic :: System :: Software Distribution',
                          'Topic :: System :: Systems Administration'])
 
-    for manpage in os.listdir('docs/man/'):
-        project.install_file('share/man/man1/', 'docs/man/%s' % manpage)
+    project.install_file('share/man/man1/', 'docs/man/hostexpand.1.gz')
 
 
 @init(environments='teamcity')
