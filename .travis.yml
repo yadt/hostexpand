@@ -4,7 +4,7 @@ python:
   - "2.7"
   - "pypy"
 before_script:
-  - sudo apt-get install pychecker
+  - sudo apt-get install pychecker ruby-ronn
 install:
   - pip install pybuilder pyfix
   - pyb --debug install_dependencies
