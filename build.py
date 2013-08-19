@@ -15,7 +15,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from pybuilder.core import use_plugin, init, Author
-import os
 
 use_plugin('python.core')
 use_plugin('python.unittest')
@@ -83,9 +82,10 @@ def set_properties(project):
 @init(environments='teamcity')
 def set_properties_for_teamcity(project):
     import os
+
     project.version = '%s-%s' % (
         project.version, os.environ.get('BUILD_NUMBER', 0))
-    project.default_task = ['install_dependencies', 'analyze', 'package']
+    project.default_task = ['generate_manpages', 'install_dependencies', 'analyze', 'package']
     project.set_property(
         'install_dependencies_index_url', os.environ.get('PYPIPROXY_URL'))
     project.set_property('install_dependencies_use_mirrors', False)
